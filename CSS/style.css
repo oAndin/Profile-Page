@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* ==============================
+   1. CRT SCANLINE LAYER
+   ============================== */
+body::before {
+    content: " ";
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+    background-size: 100% 4px, 4px 100%;
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* ==============================
+   2. SCREEN FLICKER & BASE
+   ============================== */
+@keyframes flicker {
+    0% { opacity: 0.97; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.9; }
+    100% { opacity: 1; }
+}
+
+body {
+    background: #0a0a0a !important;
+    animation: flicker 0.15s infinite;
+    color: #fff !important;
+    font-family: 'Press Start 2P', cursive !important;
+    overflow-x: hidden;
+}
+
+main {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==============================
+   3. BACKGROUND ORBIT CONTAINER
+   ============================== */
+.background-orbit-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ==============================
+   4. GLASS ICON STYLING
+   ============================== */
+.icon.glass {
+    position: fixed;
+    padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(0.3125rem);
+    border: 0.125rem solid #000;
+    box-shadow: 0.125rem 0.125rem 0 #000, -0.125rem -0.125rem 0 #000, 0.125rem -0.125rem 0 #000, -0.125rem 0.125rem 0 #000;
+    font-family: 'Press Start 2P', cursive;
+    font-size: clamp(8px, 1vw, 10px);
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+    z-index: 1;
+}
+
+/* Free-Floating Animations */
+@keyframes float1 {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(150px, -100px); }
+    50% { transform: translate(80px, 50px); }
+    75% { transform: translate(-100px, -50px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes float2 {
+    0% { transform: translate(0, 0); }
+    33% { transform: translate(-120px, 80px); }
+    66% { transform: translate(100px, -60px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes float3 {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(200px, 100px); }
+    50% { transform: translate(-150px, -80px); }
+    75% { transform: translate(50px, 120px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes float4 {
+    0% { transform: translate(0, 0); }
+    30% { transform: translate(-80px, -120px); }
+    60% { transform: translate(130px, 90px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes float5 {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(100px, -80px); }
+    40% { transform: translate(-60px, 100px); }
+    60% { transform: translate(120px, 40px); }
+    80% { transform: translate(-90px, -70px); }
+    100% { transform: translate(0, 0); }
+}
+
+/* Individual icon positions and animations */
+.icon.glass:nth-child(1) { 
+    top: 15%; left: 10%;
+    animation: float1 20s infinite ease-in-out;
+    box-shadow: 2px 2px 0px #3e6e93, -2px -2px 0px #3e6e93, 2px -2px 0px #000, -2px 2px 0px #000;
+}
+.icon.glass:nth-child(2) { 
+    top: 25%; right: 15%;
+    animation: float2 25s infinite ease-in-out;
+}
+.icon.glass:nth-child(3) { 
+    top: 35%; left: 20%;
+    animation: float3 18s infinite ease-in-out;
+    color: rgba(255, 255, 255, 0.8);
+}
+.icon.glass:nth-child(4) { 
+    top: 45%; right: 25%;
+    animation: float4 22s infinite ease-in-out;
+    box-shadow: 2px 2px 0px #4B8BBE, -2px -2px 0px #FFD43B, 2px -2px 0px #000, -2px 2px 0px #000;
+}
+.icon.glass:nth-child(5) { 
+    bottom: 45%; left: 15%;
+    animation: float5 19s infinite ease-in-out;
+}
+.icon.glass:nth-child(6) { 
+    bottom: 35%; right: 10%;
+    animation: float1 24s infinite ease-in-out reverse;
+}
+.icon.glass:nth-child(7) { 
+    top: 20%; left: 50%;
+    animation: float2 21s infinite ease-in-out;
+}
+.icon.glass:nth-child(8) { 
+    bottom: 25%; left: 30%;
+    animation: float3 26s infinite ease-in-out;
+    opacity: 0.3;
+}
+.icon.glass:nth-child(9) { 
+    top: 55%; right: 20%;
+    animation: float4 23s infinite ease-in-out;
+    opacity: 0.3;
+}
+.icon.glass:nth-child(10) { 
+    bottom: 20%; right: 35%;
+    animation: float5 20s infinite ease-in-out;
+}
+.icon.glass:nth-child(11) { 
+    top: 30%; left: 35%;
+    animation: float1 27s infinite ease-in-out;
+}
+.icon.glass:nth-child(12) { 
+    bottom: 30%; left: 45%;
+    animation: float2 22s infinite ease-in-out;
+}
+.icon.glass:nth-child(13) { 
+    top: 40%; right: 40%;
+    animation: float3 25s infinite ease-in-out;
+    box-shadow: 2px 2px 0px #336791, -2px -2px 0px #336791, 2px -2px 0px #000, -2px 2px 0px #000;
+}
+.icon.glass:nth-child(14) { 
+    bottom: 40%; left: 25%;
+    animation: float4 23s infinite ease-in-out;
+}
+.icon.glass:nth-child(15) { 
+    top: 50%; right: 30%;
+    animation: float5 21s infinite ease-in-out;
+}
+
+/* Pause animation on hover */
+.icon.glass:hover {
+    animation-play-state: paused;
+    transform: scale(1.1);
+    cursor: pointer;
+    z-index: 50;
+}
+
+
+/* ==============================
+   5. CHARACTER CARD
+   ============================== */
+.character-card {
+    position: relative;
+    z-index: 10;
+    max-width: min(90vw, 1000px);
+    width: 90%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(0.625rem);
+    border: 0.25rem solid #fff;
+    box-shadow: 0 0 1.25rem rgba(255, 255, 255, 0.3), 
+                inset 0 0 1.25rem rgba(255, 255, 255, 0.1);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    margin: 3rem auto;
+}
+
+.profile-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    margin-bottom: 2.5rem;
+    align-items: start;
+}
+
+.profile-picture {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 0.25rem solid #fff;
+    box-shadow: 0.25rem 0.25rem 0 #000;
+}
+
+.profile-info h1 {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    margin-bottom: 0.75rem;
+    text-shadow: 0.125rem 0.125rem 0 #000;
+    color: #00ff00;
+}
+
+.profile-info .role {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    color: #ffcc00;
+    margin-bottom: 0.5rem;
+}
+
+.profile-info .sub-role {
+    font-size: clamp(0.625rem, 1.5vw, 0.75rem);
+    color: #ff00ff;
+    margin-bottom: 1.25rem;
+}
+
+.quest-log, .passive-buffs {
+    margin-top: 1.25rem;
+    background: rgba(0, 0, 0, 0.5);
+    padding: clamp(1rem, 2vw, 1.25rem);
+    border: 0.125rem solid #333;
+}
+
+.quest-log h3, .passive-buffs h3 {
+    font-size: clamp(0.625rem, 1.5vw, 0.75rem);
+    color: #00ffff;
+    margin-bottom: 0.75rem;
+}
+
+.quest-log p {
+    font-size: clamp(0.5rem, 1.2vw, 0.625rem);
+    line-height: 1.8;
+    color: #fff;
+}
+
+.passive-buffs ul {
+    list-style: none;
+    padding: 0;
+}
+
+.passive-buffs li {
+    font-size: clamp(0.5rem, 1.2vw, 0.625rem);
+    line-height: 2;
+    color: #fff;
+    padding-left: 1.25rem;
+    position: relative;
+}
+
+.passive-buffs li::before {
+    content: "►";
+    position: absolute;
+    left: 0;
+    color: #00ff00;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.profile-skills, .profile-stack {
+    background: rgba(0, 0, 0, 0.5);
+    border: 0.125rem solid #333;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    min-height: clamp(200px, 25vh, 250px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .icon.glass {
+        font-size: 8px;
+        padding: 8px 12px;
+    }
+    
+    @keyframes orbit {
+        from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+        to { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+    }
+}
+
+/* ==============================
+   6. RETRO GAMING HUD - HEADER
+   ============================== */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 200;
+}
+
+.hud-bar {
+    background: linear-gradient(180deg, #d32f2f 0%, #b71c1c 100%);
+    padding: clamp(0.75rem, 1.5vh, 1rem) clamp(1.5rem, 3vw, 2rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.25rem solid #000;
+    box-shadow: 0 0.25rem 0 rgba(0, 0, 0, 0.5), 
+                inset 0 -0.125rem 0 rgba(0, 0, 0, 0.3);
+}
+
+.hud-bar .logo {
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0.125rem 0.125rem 0 #000, -0.0625rem -0.0625rem 0 rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.0625rem;
+}
+
+.game-menu {
+    display: flex;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    align-items: center;
+}
+
+.menu-item {
+    font-size: clamp(10px, 1.5vw, 12px);
+    color: #ffeb3b;
+    text-decoration: none;
+    text-shadow: 0.0625rem 0.0625rem 0 #000;
+    font-weight: bold;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    color: #fff;
+    text-shadow: 0 0 0.625rem #ffeb3b, 0.0625rem 0.0625rem 0 #000;
+}
+
+.menu-item.lives {
+    color: #ff6b6b;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* ==============================
+   7. RETRO GAMING HUD - FOOTER
+   ============================== */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 200;
+}
+
+.hud-footer {
+    background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+    padding: clamp(0.625rem, 1.2vh, 0.75rem) clamp(1.5rem, 3vw, 2rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 0.1875rem solid #333;
+    box-shadow: 0 -0.25rem 0 rgba(0, 0, 0, 0.5);
+}
+
+.footer-left,
+.footer-right {
+    display: flex;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    align-items: center;
+}
+
+.location-info,
+.connection-info {
+    font-size: clamp(8px, 1.2vw, 10px);
+    color: #00ff00;
+    text-shadow: 0 0 0.3125rem #00ff00, 0.0625rem 0.0625rem 0 #000;
+}
+
+.connection-info {
+    color: #00ffff;
+    text-shadow: 0 0 0.3125rem #00ffff, 0.0625rem 0.0625rem 0 #000;
+}
+
+.fps-counter {
+    font-size: clamp(10px, 1.5vw, 12px);
+    color: #00ff00;
+    font-weight: bold;
+    text-shadow: 0 0 0.3125rem #00ff00, 0.0625rem 0.0625rem 0 #000;
+}
+
+.social-icons {
+    display: flex;
+    gap: clamp(0.75rem, 1.5vw, 1rem);
+}
+
+.social-icons a {
+    font-size: clamp(16px, 2vw, 20px);
+    text-decoration: none;
+    transition: all 0.2s;
+    filter: grayscale(0);
+}
+
+.social-icons a:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.8));
+}
+
+/* Add padding to body to account for fixed header/footer */
+body {
+    padding-top: clamp(3rem, 8vh, 4rem);
+    padding-bottom: clamp(2.5rem, 6vh, 3.5rem);
+}
+
+/* Responsive for header/footer */
+@media (max-width: 768px) {
+    .hud-bar {
+        padding: 10px 15px;
+    }
+    
+    .hud-bar .logo {
+        font-size: 14px;
+    }
+    
+    .game-menu {
+        gap: 10px;
+    }
+    
+    .menu-item {
+        font-size: 9px;
+    }
+    
+    .hud-footer {
+        padding: 8px 15px;
+    }
+    
+    .footer-left,
+    .footer-right {
+        gap: 15px;
+    }
+    
+    .location-info,
+    .connection-info,
+    .fps-counter {
+        font-size: 8px;
+    }
+    
+    .social-icons a {
+        font-size: 16px;
+    }
+}

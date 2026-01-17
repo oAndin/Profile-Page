@@ -1,0 +1,298 @@
+/* ==============================
+   GRID LAYOUT - 4 SQUARES
+   ============================== */
+
+/* Main grid container */
+.main-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 3vw, 2rem);
+    max-width: min(95vw, 1400px);
+    margin: 0 auto;
+    padding: clamp(1rem, 2vw, 2rem);
+}
+
+/* Grid card shared styling */
+.grid-card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border: 0.25rem solid #fff;
+    box-shadow: 0 0 1.25rem rgba(255, 255, 255, 0.3), 
+                inset 0 0 1.25rem rgba(255, 255, 255, 0.1);
+    padding: clamp(1rem, 2vw, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    transition: all 0.3s ease;
+}
+
+.grid-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5), 
+                inset 0 0 1.5rem rgba(255, 255, 255, 0.2);
+}
+
+/* Card header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #00ff00;
+}
+
+.card-header h2 {
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+    color: #00ffff;
+    text-shadow: 0 0 0.5rem #00ffff;
+}
+
+.level-badge {
+    font-size: clamp(0.625rem, 1.5vw, 0.75rem);
+    color: #ffcc00;
+    padding: 0.25rem 0.5rem;
+    border: 2px solid #ffcc00;
+    background: rgba(255, 204, 0, 0.1);
+}
+
+/* Card body */
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Card footer */
+.card-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.view-more-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #fff;
+    font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.view-more-btn:hover {
+    background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+    box-shadow: 0 0 1rem rgba(102, 126, 234, 0.8);
+    transform: scale(1.02);
+}
+
+/* ==============================
+   PROFILE CARD SPECIFIC
+   ============================== */
+.profile-preview {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.avatar-small {
+    width: clamp(60px, 10vw, 80px);
+    height: clamp(60px, 10vw, 80px);
+    border: 2px solid #fff;
+    box-shadow: 0.25rem 0.25rem 0 #000;
+    overflow: hidden;
+}
+
+.avatar-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-text h3 {
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+    color: #00ff00;
+    margin-bottom: 0.5rem;
+}
+
+.profile-text .role {
+    font-size: clamp(0.625rem, 1.5vw, 0.75rem);
+    color: #ffcc00;
+    margin-bottom: 0.25rem;
+}
+
+.profile-text .sub-role {
+    font-size: clamp(0.5rem, 1.2vw, 0.625rem);
+    color: #ff00ff;
+}
+
+.quick-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: clamp(0.5rem, 1.2vw, 0.625rem);
+}
+
+.stat-label {
+    color: #00ffff;
+}
+
+.stat-value {
+    color: #fff;
+}
+
+/* ==============================
+   BIO CARD SPECIFIC
+   ============================== */
+.bio-preview {
+    font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+    line-height: 1.6;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.highlight-item {
+    font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+    color: #00ff00;
+    padding: 0.5rem;
+    background: rgba(0, 255, 0, 0.1);
+    border-left: 3px solid #00ff00;
+}
+
+/* ==============================
+   PORTFOLIO CARD SPECIFIC
+   ============================== */
+.project-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.project-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s;
+}
+
+.project-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.project-icon {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+.project-name {
+    font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+    color: #fff;
+}
+
+.tech-stack-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tech-badge {
+    padding: 0.25rem 0.5rem;
+    font-size: clamp(0.5rem, 1vw, 0.625rem);
+    background: rgba(102, 126, 234, 0.3);
+    border: 1px solid #667eea;
+    color: #fff;
+}
+
+/* ==============================
+   CONTACT CARD SPECIFIC
+   ============================== */
+.contact-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+    color: #fff;
+}
+
+.contact-icon {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+.availability {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(0, 255, 0, 0.1);
+    border: 2px solid #00ff00;
+    margin-top: auto;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    background: #00ff00;
+    border-radius: 50%;
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0.5rem #00ff00; }
+    50% { opacity: 0.5; box-shadow: 0 0 1rem #00ff00; }
+}
+
+.status-text {
+    font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+    color: #00ff00;
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+   ============================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .main-grid {
+        gap: 1.5rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .grid-card {
+        min-height: 300px;
+    }
+}
