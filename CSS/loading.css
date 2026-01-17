@@ -1,0 +1,239 @@
+/* ==============================
+   CRT LOADING SCREEN
+   ============================== */
+
+/* Loading screen overlay */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* CRT Screen container */
+.crt-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* CRT Screen curvature effect */
+.crt-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Scanlines effect */
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 2;
+    animation: scanline-flicker 0.1s infinite;
+}
+
+@keyframes scanline-flicker {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.9; }
+}
+
+/* Screen content wrapper */
+.loading-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Progress bar container */
+.progress-container {
+    width: min(400px, 80vw);
+    margin-bottom: 2rem;
+}
+
+/* Progress bar outer border */
+.progress-bar {
+    width: 100%;
+    height: 40px;
+    border: 4px solid #4169e1;
+    background: #000;
+    box-shadow: 
+        0 0 10px rgba(65, 105, 225, 0.5),
+        inset 0 0 10px rgba(0, 0, 0, 0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Progress bar fill */
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, 
+        #00ff00 0%, 
+        #00ff00 45%, 
+        #7fff00 50%, 
+        #00ff00 55%, 
+        #00ff00 100%
+    );
+    display: flex;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+    animation: progress-glow 1s infinite alternate;
+}
+
+@keyframes progress-glow {
+    from { box-shadow: 0 0 10px rgba(0, 255, 0, 0.6); }
+    to { box-shadow: 0 0 20px rgba(0, 255, 0, 1); }
+}
+
+/* Individual progress segments (pixelated blocks) */
+.progress-segment {
+    flex: 1;
+    height: 100%;
+    border-right: 2px solid #000;
+    background: #00ff00;
+}
+
+.progress-segment:last-child {
+    border-right: none;
+}
+
+/* Loading text */
+.loading-text {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: bold;
+    color: #4169e1;
+    text-shadow: 
+        0 0 10px rgba(65, 105, 225, 0.8),
+        0 0 20px rgba(65, 105, 225, 0.6);
+    margin-bottom: 1rem;
+    letter-spacing: 0.2em;
+    animation: text-blink 1.5s infinite;
+}
+
+@keyframes text-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.7; }
+}
+
+/* Subtext */
+.loading-subtext {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+    color: #888;
+    text-shadow: 0 0 5px rgba(136, 136, 136, 0.5);
+    letter-spacing: 0.15em;
+}
+
+/* CRT screen curvature distortion */
+.crt-container {
+    perspective: 1000px;
+}
+
+.loading-content {
+    transform: scale(0.98);
+    filter: blur(0.5px);
+}
+
+/* RGB Chromatic aberration */
+.loading-text, .loading-subtext {
+    position: relative;
+}
+
+.loading-text::before,
+.loading-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+}
+
+.loading-text::before {
+    color: #ff0000;
+    transform: translateX(-1px);
+    text-shadow: none;
+}
+
+.loading-text::after {
+    color: #00ffff;
+    transform: translateX(1px);
+    text-shadow: none;
+}
+
+/* Percentage display */
+.progress-percentage {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: #00ff00;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+/* CRT flicker effect */
+@keyframes crt-flicker {
+    0% { opacity: 1; }
+    2% { opacity: 0.95; }
+    4% { opacity: 1; }
+    19% { opacity: 1; }
+    21% { opacity: 0.98; }
+    23% { opacity: 1; }
+    80% { opacity: 1; }
+    83% { opacity: 0.97; }
+    87% { opacity: 1; }
+}
+
+.crt-container {
+    animation: crt-flicker 5s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .progress-bar {
+        height: 30px;
+    }
+    
+    .loading-text {
+        letter-spacing: 0.1em;
+    }
+}
