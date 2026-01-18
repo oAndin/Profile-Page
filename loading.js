@@ -56,6 +56,9 @@ class LoadingScreen {
     }
     
     start() {
+        // Set global flag to indicate loading is active
+        window.__LOADING_SCREEN_ACTIVE__ = true;
+        
         const loadDuration = Math.random() * (this.maxLoadTime - this.minLoadTime) + this.minLoadTime;
         const startTime = Date.now();
         
@@ -129,20 +132,35 @@ class LoadingScreen {
         // Remove from DOM after transition
         setTimeout(() => {
             this.loadingScreen.remove();
+            // Clear global flag to allow next loading screen
+            window.__LOADING_SCREEN_ACTIVE__ = false;
         }, 500);
     }
 }
+
+// ==============================
+// GLOBAL STATE - Prevent multiple instances
+// ==============================
+window.__LOADING_SCREEN_ACTIVE__ = window.__LOADING_SCREEN_ACTIVE__ || false;
+window.__LOADING_INITIALIZED__ = window.__LOADING_INITIALIZED__ || false;
 
 // Initialize loading screen on first page load
 let isFirstLoad = true;
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLoadingScreen);
+    document.addEventListener('DOMContentLoaded', initLoadingScreen, { once: true });
 } else {
     initLoadingScreen();
 }
 
 function initLoadingScreen() {
+    // Guard: Prevent double initialization
+    if (window.__LOADING_INITIALIZED__) {
+        console.log('⚠️ Loading screen already initialized, skipping...');
+        return;
+    }
+    window.__LOADING_INITIALIZED__ = true;
+    
     // Show loading screen on first visit
     if (isFirstLoad) {
         const initialLoader = new LoadingScreen();
@@ -159,8 +177,21 @@ function setupNavigationLoading() {
     const navLinks = document.querySelectorAll('.nav a[href^="#"], .view-more-btn');
     
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        // Remove any existing click handler to prevent duplicates
+        const existingHandler = link.__loadingClickHandler__;
+        if (existingHandler) {
+            link.removeEventListener('click', existingHandler);
+        }
+        
+        // Create new handler
+        const clickHandler = (e) => {
             e.preventDefault();
+            
+            // Guard: Prevent multiple loading screens
+            if (window.__LOADING_SCREEN_ACTIVE__) {
+                console.log('⚠️ Loading screen already active, skipping...');
+                return;
+            }
             
             const targetId = link.getAttribute('href');
             
@@ -187,7 +218,11 @@ function setupNavigationLoading() {
             
             navLoader.start();
             console.log(`🔄 Loading navigation to: ${targetId}`);
-        });
+        };
+        
+        // Store handler reference and attach
+        link.__loadingClickHandler__ = clickHandler;
+        link.addEventListener('click', clickHandler);
     });
 }
 

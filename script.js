@@ -221,9 +221,16 @@ class ConnectionMonitor {
  * Initialize HUD stats when DOM is ready
  */
 function initializeHUD() {
+    // Guard: Prevent double initialization
+    if (window.__HUD_INITIALIZED__) {
+        console.log('⚠️ HUD already initialized, skipping...');
+        return;
+    }
+    window.__HUD_INITIALIZED__ = true;
+    
     // Wait for DOM to be fully loaded
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', init, { once: true });
     } else {
         init();
     }

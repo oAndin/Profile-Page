@@ -17,6 +17,12 @@
     z-index: 9999;
     opacity: 1;
     transition: opacity 0.5s ease;
+    overflow: hidden;
+}
+
+/* Hide scrollbar when loading */
+body:has(#loading-screen) {
+    overflow: hidden !important;
 }
 
 #loading-screen.hidden {

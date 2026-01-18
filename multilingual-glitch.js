@@ -87,7 +87,20 @@ class MultilingualGlitch {
                 ja: '機会を求めています',
                 it: 'Disponibile per Opportunità',
                 es: 'Disponible para Oportunidades'
-            }
+            },
+            // Tech Stack (Japanese only for quick glitch)
+            'tech-java': { en: 'Java', ja: 'ジャバ' },
+            'tech-nodejs': { en: 'Node.JS', ja: 'ノード' },
+            'tech-reactjs': { en: 'React.JS', ja: 'リアクト' },
+            'tech-nextjs': { en: 'Next.JS', ja: 'ネクスト' },
+            'tech-javascript': { en: 'JavaScript', ja: 'ジャバスクリプト' },
+            'tech-typescript': { en: 'TypeScript', ja: 'タイプスクリプト' },
+            'tech-springboot': { en: 'Spring Boot', ja: 'スプリング' },
+            'tech-postgresql': { en: 'PostgreSQL', ja: 'ポストグレス' },
+            'tech-supabase': { en: 'Supabase', ja: 'スーパベース' },
+            'tech-github': { en: 'GitHub', ja: 'ギットハブ' },
+            'tech-python': { en: 'Python', ja: 'パイソン' },
+            'tech-render': { en: 'Render', ja: 'レンダー' }
         };
         
         this.initGlitchEffect();
@@ -124,6 +137,35 @@ class MultilingualGlitch {
                 }
             }
         });
+        
+        // Add tech stack icons (Japanese-only quick glitch)
+        const techIcons = document.querySelectorAll('.background-orbit-container .icon.glass');
+        techIcons.forEach((icon) => {
+            const text = icon.textContent.trim();
+            let key = null;
+            
+            // Map text to translation key
+            if (text === 'Java') key = 'tech-java';
+            else if (text === 'Node.JS') key = 'tech-nodejs';
+            else if (text === 'React.JS') key = 'tech-reactjs';
+            else if (text === 'Next.JS') key = 'tech-nextjs';
+            else if (text === 'JavaScript') key = 'tech-javascript';
+            else if (text === 'TypeScript') key = 'tech-typescript';
+            else if (text === 'Spring Boot') key = 'tech-springboot';
+            else if (text === 'PostgreSQL') key = 'tech-postgresql';
+            else if (text === 'Supabase') key = 'tech-supabase';
+            else if (text === 'GitHub') key = 'tech-github';
+            else if (text === 'Python') key = 'tech-python';
+            else if (text === 'Render') key = 'tech-render';
+            
+            if (key) {
+                icon.setAttribute('data-tech-glitch', key);
+                icon.setAttribute('data-original-text', text);
+            }
+        });
+        
+        // Start tech icon glitch cycle
+        this.startTechGlitchCycle();
     }
     
     startGlitchCycle() {
@@ -191,17 +233,78 @@ class MultilingualGlitch {
         
         console.log(`✨ Glitched: ${key}`);
     }
+    
+    // Quick Japanese glitch for tech icons
+    startTechGlitchCycle() {
+        const scheduleNextTechGlitch = () => {
+            const delay = Math.random() * 3000 + 2000; // 2-5 seconds
+            setTimeout(() => {
+                this.performTechGlitch();
+                scheduleNextTechGlitch();
+            }, delay);
+        };
+        
+        scheduleNextTechGlitch();
+    }
+    
+    performTechGlitch() {
+        const techIcons = document.querySelectorAll('[data-tech-glitch]');
+        
+        if (techIcons.length === 0) return;
+        
+        // Pick 2-4 random tech icons to glitch
+        const numToGlitch = Math.floor(Math.random() * 3) + 2;
+        const iconsArray = Array.from(techIcons);
+        const shuffled = iconsArray.sort(() => 0.5 - Math.random());
+        const selectedIcons = shuffled.slice(0, numToGlitch);
+        
+        selectedIcons.forEach(icon => {
+            this.quickTechGlitch(icon);
+        });
+    }
+    
+    async quickTechGlitch(icon) {
+        const key = icon.getAttribute('data-tech-glitch');
+        const originalText = icon.getAttribute('data-original-text');
+        const translations = this.translations[key];
+        
+        if (!translations) return;
+        
+        // Add quick glitch class
+        icon.classList.add('glitching');
+        
+        // Rapid cycle to Japanese and back (3 cycles, 40ms each = 120ms total)
+        for (let i = 0; i < 3; i++) {
+            icon.textContent = translations.ja;
+            await new Promise(resolve => setTimeout(resolve, 40));
+            icon.textContent = originalText;
+            await new Promise(resolve => setTimeout(resolve, 40));
+        }
+        
+        // Return to original
+        icon.textContent = originalText;
+        icon.classList.remove('glitching');
+        
+        console.log(`⚡ Tech glitched: ${key} → ${translations.ja}`);
+    }
 }
 
 // Initialize the multilingual glitch effect
 let multilingualGlitch;
 
 function initMultilingualGlitch() {
+    // Guard: Prevent double initialization
+    if (window.__MULTILINGUAL_GLITCH_INITIALIZED__) {
+        console.log('⚠️ Multilingual glitch already initialized, skipping...');
+        return;
+    }
+    window.__MULTILINGUAL_GLITCH_INITIALIZED__ = true;
+    
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             multilingualGlitch = new MultilingualGlitch();
             console.log('🌐 Multilingual Glitch Effect Initialized!');
-        });
+        }, { once: true });
     } else {
         multilingualGlitch = new MultilingualGlitch();
         console.log('🌐 Multilingual Glitch Effect Initialized!');
