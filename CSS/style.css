@@ -32,12 +32,12 @@ body {
     animation: flicker 0.15s infinite;
     color: #fff !important;
     font-family: 'Press Start 2P', cursive !important;
-    overflow-x: hidden;
+    overflow: hidden; /* Prevent scrolling */
 }
 
 main {
     position: relative;
-    min-height: 100vh;
+    height: calc(100vh - 140px); /* Account for header and footer */
     display: flex;
     align-items: center;
     justify-content: center;

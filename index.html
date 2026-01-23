@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/grid.css">
     <link rel="stylesheet" href="CSS/loading.css">
+    <link rel="stylesheet" href="CSS/landing.css">
 </head>
 
 <body>
@@ -49,124 +50,76 @@
             <div class="icon glass"></div>
         </div>
 
-        <!-- 4-Square Grid Container -->
-        <div class="main-grid">
-            <!-- Section 1: Profile (Top-Left) -->
-            <section class="grid-card" id="profile">
-                <div class="card-header">
-                    <h2>👤 PROFILE</h2>
-                    <span class="level-badge">[LVL 99]</span>
-                </div>
-                <div class="card-body">
-                    <div class="profile-preview">
-                        <div class="avatar-small">
+        <!-- Main Landing Section -->
+        <div class="landing-container">
+            <section class="landing-card">
+                <!-- Left Side: Profile Info -->
+                <div class="profile-section">
+                    <div class="card-header">
+                        <h2>👤 PROFILE</h2>
+                        <span class="level-badge">[LVL 99]</span>
+                    </div>
+                    <div class="profile-content">
+                        <div class="avatar-large">
                             <img src="https://avatars.githubusercontent.com/u/112807863?v=4" alt="Andherson Costa">
                         </div>
-                        <div class="profile-text">
-                            <h3>Andherson Costa</h3>
-                            <p class="role">Data Analyst</p>
-                            <p class="sub-role">Software Developer</p>
+                        <div class="profile-info">
+                            <h1 class="profile-name">Andherson Costa</h1>
+                            <p class="profile-role">Data Analyst</p>
+                            <p class="profile-sub-role">Software Developer</p>
                         </div>
-                    </div>
-                    <div class="quick-stats">
-                        <div class="stat-item">
-                            <span class="stat-label">LOCATION:</span>
-                            <span class="stat-value">🇧🇷 Fortaleza, CE</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">LANGUAGES:</span>
-                            <span class="stat-value">5 (PT, EN, NO, ES, IT)</span>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">LOCATION:</span>
+                                <span class="stat-value">🇧🇷 Fortaleza, CE</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">LANGUAGES:</span>
+                                <span class="stat-value">5 (PT, EN, NO, ES, IT)</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">STATUS:</span>
+                                <span class="stat-value status-available">🟢 AVAILABLE</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="profile.html" class="view-more-btn">VIEW FULL PROFILE →</a>
-                </div>
-            </section>
 
-            <!-- Section 2: Bio (Top-Right) -->
-            <section class="grid-card" id="bio">
-                <div class="card-header">
-                    <h2>📖 BIO</h2>
-                    <span class="level-badge">[STORY]</span>
-                </div>
-                <div class="card-body">
-                    <p class="bio-preview">
-                        Currently bridging the gap between robust Java backends and high-performance React/Next.js
-                        interfaces.
-                    </p>
-                    <div class="highlights">
-                        <div class="highlight-item">✨ Full-Stack Developer</div>
-                        <div class="highlight-item">📊 Data Analysis</div>
-                        <div class="highlight-item">🚀 Cloud Architecture Student</div>
+                <!-- Right Side: Navigation Menu -->
+                <div class="navigation-menu">
+                    <div class="menu-header">
+                        <h3>MAIN MENU</h3>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a href="bio.html" class="view-more-btn">READ FULL STORY →</a>
-                </div>
-            </section>
-
-            <!-- Section 3: Portfolio (Bottom-Left) -->
-            <section class="grid-card" id="portfolio">
-                <div class="card-header">
-                    <h2>💼 PORTFOLIO</h2>
-                    <span class="level-badge">[PROJECTS]</span>
-                </div>
-                <div class="card-body">
-                    <div class="project-preview">
-                        <div class="project-item">
-                            <span class="project-icon">🎮</span>
-                            <span class="project-name">Click-Office</span>
-                        </div>
-                        <div class="project-item">
-                            <span class="project-icon">🎴</span>
-                            <span class="project-name">CardVerse API</span>
-                        </div>
-                        <div class="project-item">
-                            <span class="project-icon">📊</span>
-                            <span class="project-name">Data Analytics</span>
-                        </div>
-                    </div>
-                    <div class="tech-stack-preview">
-                        <span class="tech-badge">Java</span>
-                        <span class="tech-badge">React</span>
-                        <span class="tech-badge">Next.js</span>
-                        <span class="tech-badge">+12</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="portfolio.html" class="view-more-btn">EXPLORE PROJECTS →</a>
-                </div>
-            </section>
-
-            <!-- Section 4: Contact (Bottom-Right) -->
-            <section class="grid-card" id="contact">
-                <div class="card-header">
-                    <h2>📬 CONTACT</h2>
-                    <span class="level-badge">[REACH ME]</span>
-                </div>
-                <div class="card-body">
-                    <div class="contact-preview">
-                        <div class="contact-item">
-                            <span class="contact-icon">📧</span>
-                            <span class="contact-text">Email Available</span>
-                        </div>
-                        <div class="contact-item">
-                            <span class="contact-icon">💼</span>
-                            <span class="contact-text">LinkedIn Active</span>
-                        </div>
-                        <div class="contact-item">
-                            <span class="contact-icon">🐙</span>
-                            <span class="contact-text">GitHub Open</span>
-                        </div>
-                    </div>
-                    <div class="availability">
-                        <span class="status-indicator"></span>
-                        <span class="status-text">Available for Opportunities</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="contact.html" class="view-more-btn">GET IN TOUCH →</a>
+                    <nav class="menu-list">
+                        <a href="bio.html" class="menu-link">
+                            <span class="menu-arrow">►</span>
+                            <div class="menu-content">
+                                <span class="menu-title">📖 BIOGRAPHY</span>
+                                <span class="menu-desc">Read my story</span>
+                            </div>
+                        </a>
+                        <a href="portfolio.html" class="menu-link">
+                            <span class="menu-arrow">►</span>
+                            <div class="menu-content">
+                                <span class="menu-title">💼 PORTFOLIO</span>
+                                <span class="menu-desc">Explore projects</span>
+                            </div>
+                        </a>
+                        <a href="contact.html" class="menu-link">
+                            <span class="menu-arrow">►</span>
+                            <div class="menu-content">
+                                <span class="menu-title">📬 CONTACT</span>
+                                <span class="menu-desc">Get in touch</span>
+                            </div>
+                        </a>
+                        <a href="profile.html" class="menu-link">
+                            <span class="menu-arrow">►</span>
+                            <div class="menu-content">
+                                <span class="menu-title">👤 FULL PROFILE</span>
+                                <span class="menu-desc">View complete info</span>
+                            </div>
+                        </a>
+                    </nav>
                 </div>
             </section>
         </div>

@@ -45,6 +45,10 @@ class LoadingScreen {
         this.loadingScreen = document.getElementById('loading-screen');
         this.progressFill = document.getElementById('progress-fill');
         this.progressPercentage = document.getElementById('progress-percentage');
+        
+        // Trigger CRT Power On animation
+        const crtContainer = this.loadingScreen.querySelector('.crt-container');
+        crtContainer.classList.add('crt-power-on');
     }
     
     createSegments() {
@@ -85,7 +89,24 @@ class LoadingScreen {
     }
     
     updateProgress(percent) {
-        this.progressFill.style.width = `${percent}%`;
+        // Calculate how many segments should be filled based on percentage
+        const segmentsToFill = Math.floor((percent / 100) * this.segments);
+        
+        // Get all segment elements
+        const segmentElements = this.progressFill.querySelectorAll('.progress-segment');
+        
+        // Fill segments one by one
+        segmentElements.forEach((segment, index) => {
+            if (index < segmentsToFill) {
+                segment.style.opacity = '1';
+                segment.style.visibility = 'visible';
+            } else {
+                segment.style.opacity = '0';
+                segment.style.visibility = 'hidden';
+            }
+        });
+        
+        // Update percentage text
         this.progressPercentage.textContent = `${percent}%`;
         
         // Add glitch effect occasionally
@@ -139,14 +160,14 @@ class LoadingScreen {
 }
 
 // ==============================
-// GLOBAL STATE - Prevent multiple instances
+// GLOBAL STATE - Track if loading has been shown
 // ==============================
-window.__LOADING_SCREEN_ACTIVE__ = window.__LOADING_SCREEN_ACTIVE__ || false;
-window.__LOADING_INITIALIZED__ = window.__LOADING_INITIALIZED__ || false;
+const LOADING_KEY = '__LOADING_SCREEN_SHOWN__';
 
-// Initialize loading screen on first page load
-let isFirstLoad = true;
+// Check if loading screen has already been shown in this session
+const hasShownLoading = sessionStorage.getItem(LOADING_KEY);
 
+// Initialize loading screen ONLY on first page load
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initLoadingScreen, { once: true });
 } else {
@@ -154,76 +175,22 @@ if (document.readyState === 'loading') {
 }
 
 function initLoadingScreen() {
-    // Guard: Prevent double initialization
-    if (window.__LOADING_INITIALIZED__) {
-        console.log('⚠️ Loading screen already initialized, skipping...');
-        return;
-    }
-    window.__LOADING_INITIALIZED__ = true;
-    
-    // Show loading screen on first visit
-    if (isFirstLoad) {
-        const initialLoader = new LoadingScreen();
-        initialLoader.start();
-        isFirstLoad = false;
-    }
-    
-    // Add loading screen to navigation links
-    setupNavigationLoading();
-}
-
-function setupNavigationLoading() {
-    // Get all navigation links
-    const navLinks = document.querySelectorAll('.nav a[href^="#"], .view-more-btn');
-    
-    navLinks.forEach(link => {
-        // Remove any existing click handler to prevent duplicates
-        const existingHandler = link.__loadingClickHandler__;
-        if (existingHandler) {
-            link.removeEventListener('click', existingHandler);
-        }
+    // Only show loading if it hasn't been shown yet in this session
+    if (!hasShownLoading) {
+        console.log('🎮 First page load - showing loading screen');
         
-        // Create new handler
-        const clickHandler = (e) => {
-            e.preventDefault();
-            
-            // Guard: Prevent multiple loading screens
-            if (window.__LOADING_SCREEN_ACTIVE__) {
-                console.log('⚠️ Loading screen already active, skipping...');
-                return;
+        const initialLoader = new LoadingScreen({
+            onComplete: () => {
+                // Mark loading as shown for this session
+                sessionStorage.setItem(LOADING_KEY, 'true');
+                console.log('✅ Loading complete - will not show again until page reload');
             }
-            
-            const targetId = link.getAttribute('href');
-            
-            // Show loading screen
-            const navLoader = new LoadingScreen({
-                minLoadTime: 1000,
-                maxLoadTime: 1500,
-                onComplete: () => {
-                    // Scroll to target section after loading
-                    if (targetId && targetId.startsWith('#')) {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            targetElement.scrollIntoView({ 
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }
-                    } else if (targetId) {
-                        // For links to other pages
-                        window.location.href = targetId;
-                    }
-                }
-            });
-            
-            navLoader.start();
-            console.log(`🔄 Loading navigation to: ${targetId}`);
-        };
+        });
         
-        // Store handler reference and attach
-        link.__loadingClickHandler__ = clickHandler;
-        link.addEventListener('click', clickHandler);
-    });
+        initialLoader.start();
+    } else {
+        console.log('⏭️ Loading screen already shown this session - skipping');
+    }
 }
 
 console.log('🎮 CRT Loading Screen System Initialized!');

@@ -1,0 +1,353 @@
+/* ==============================
+   RETRO GAME MENU SCREEN
+   ============================== */
+
+/* Main screen container */
+.game-menu-screen {
+    width: 100%;
+    min-height: 100vh;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* CRT Screen wrapper */
+.crt-screen {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    overflow: hidden;
+}
+
+/* CRT Screen curvature effect */
+.crt-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Scanlines effect */
+.crt-screen .scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 9;
+    animation: scanline-flicker 0.1s infinite;
+}
+
+@keyframes scanline-flicker {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.9; }
+}
+
+/* Menu content container */
+.menu-container {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Game Title */
+.game-title {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: title-entrance 1s ease-out;
+}
+
+@keyframes title-entrance {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title-glitch {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: bold;
+    color: #00ff00;
+    text-shadow: 
+        0 0 10px rgba(0, 255, 0, 0.8),
+        0 0 20px rgba(0, 255, 0, 0.6),
+        0 0 30px rgba(0, 255, 0, 0.4);
+    letter-spacing: 0.3em;
+    line-height: 1.2;
+    position: relative;
+}
+
+.title-glitch.subtitle {
+    font-size: clamp(2rem, 8vw, 4rem);
+    margin-top: -1rem;
+}
+
+/* RGB Chromatic aberration for title */
+.title-glitch::before,
+.title-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+}
+
+.title-glitch::before {
+    color: #ff0000;
+    transform: translateX(-2px);
+    text-shadow: none;
+    animation: glitch-1 3s infinite;
+}
+
+.title-glitch::after {
+    color: #00ffff;
+    transform: translateX(2px);
+    text-shadow: none;
+    animation: glitch-2 3s infinite;
+}
+
+@keyframes glitch-1 {
+    0%, 100% { transform: translateX(-2px); }
+    25% { transform: translateX(-3px) translateY(1px); }
+    50% { transform: translateX(-1px); }
+    75% { transform: translateX(-2px) translateY(-1px); }
+}
+
+@keyframes glitch-2 {
+    0%, 100% { transform: translateX(2px); }
+    25% { transform: translateX(3px) translateY(-1px); }
+    50% { transform: translateX(1px); }
+    75% { transform: translateX(2px) translateY(1px); }
+}
+
+/* Menu Options */
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    animation: menu-entrance 1s ease-out 0.3s both;
+}
+
+@keyframes menu-entrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu-option {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    color: #00ff00;
+    text-decoration: none;
+    padding: 1rem 3rem;
+    border: 3px solid #00ff00;
+    background: transparent;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: min(400px, 80vw);
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    box-shadow: 
+        0 0 10px rgba(0, 255, 0, 0.3),
+        inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.menu-arrow {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    font-size: 1.2em;
+}
+
+.menu-text {
+    letter-spacing: 0.2em;
+    flex: 1;
+    text-align: center;
+}
+
+/* Hover state */
+.menu-option:hover,
+.menu-option.active {
+    background: rgba(0, 255, 0, 0.1);
+    border-color: #7fff00;
+    color: #7fff00;
+    text-shadow: 
+        0 0 15px rgba(127, 255, 0, 0.8),
+        0 0 25px rgba(127, 255, 0, 0.6);
+    box-shadow: 
+        0 0 20px rgba(0, 255, 0, 0.6),
+        inset 0 0 20px rgba(0, 255, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.menu-option:hover .menu-arrow,
+.menu-option.active .menu-arrow {
+    opacity: 1;
+    transform: translateX(0);
+    animation: arrow-blink 1s infinite;
+}
+
+@keyframes arrow-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.3; }
+}
+
+/* Menu footer info */
+.menu-footer {
+    margin-top: 4rem;
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    animation: footer-entrance 1s ease-out 0.6s both;
+}
+
+@keyframes footer-entrance {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.footer-info {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+    color: #888;
+    text-shadow: 0 0 5px rgba(136, 136, 136, 0.5);
+    letter-spacing: 0.15em;
+}
+
+/* Background particles */
+.background-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    color: rgba(0, 255, 0, 0.1);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    animation: float-particle 20s infinite linear;
+}
+
+.particle:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; animation-duration: 25s; }
+.particle:nth-child(2) { top: 20%; left: 80%; animation-delay: 2s; animation-duration: 30s; }
+.particle:nth-child(3) { top: 40%; left: 10%; animation-delay: 4s; animation-duration: 22s; }
+.particle:nth-child(4) { top: 60%; left: 85%; animation-delay: 1s; animation-duration: 28s; }
+.particle:nth-child(5) { top: 75%; left: 20%; animation-delay: 3s; animation-duration: 26s; }
+.particle:nth-child(6) { top: 30%; left: 90%; animation-delay: 5s; animation-duration: 24s; }
+.particle:nth-child(7) { top: 50%; left: 5%; animation-delay: 2.5s; animation-duration: 27s; }
+.particle:nth-child(8) { top: 80%; left: 70%; animation-delay: 1.5s; animation-duration: 29s; }
+.particle:nth-child(9) { top: 15%; left: 50%; animation-delay: 4.5s; animation-duration: 23s; }
+.particle:nth-child(10) { top: 65%; left: 45%; animation-delay: 0.5s; animation-duration: 31s; }
+
+@keyframes float-particle {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.1;
+    }
+    90% {
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* CRT flicker effect */
+@keyframes crt-flicker {
+    0% { opacity: 1; }
+    2% { opacity: 0.95; }
+    4% { opacity: 1; }
+    19% { opacity: 1; }
+    21% { opacity: 0.98; }
+    23% { opacity: 1; }
+    80% { opacity: 1; }
+    83% { opacity: 0.97; }
+    87% { opacity: 1; }
+}
+
+.crt-screen {
+    animation: crt-flicker 5s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .menu-option {
+        padding: 0.75rem 2rem;
+        min-width: min(300px, 90vw);
+        gap: 0.75rem;
+    }
+    
+    .game-title {
+        margin-bottom: 3rem;
+    }
+    
+    .menu-options {
+        gap: 1rem;
+    }
+    
+    .menu-footer {
+        margin-top: 3rem;
+        gap: 2rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .title-glitch {
+        letter-spacing: 0.2em;
+    }
+}
+
+/* Ensure body has no scroll when menu is visible */
+body:has(.game-menu-screen) {
+    overflow: hidden;
+}

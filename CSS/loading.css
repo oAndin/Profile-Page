@@ -36,6 +36,30 @@ body:has(#loading-screen) {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background: #000;
+}
+
+/* The Power On Animation */
+@keyframes crt-power-on {
+    0% {
+        transform: scaleY(0.005) scaleX(0);
+        filter: brightness(3);
+        opacity: 1;
+    }
+    50% {
+        transform: scaleY(0.005) scaleX(1);
+        filter: brightness(2);
+        opacity: 1;
+    }
+    100% {
+        transform: scaleY(1) scaleX(1);
+        filter: brightness(1);
+        opacity: 1;
+    }
+}
+
+.crt-power-on {
+    animation: crt-power-on 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 /* CRT Screen curvature effect */
@@ -109,23 +133,9 @@ body:has(#loading-screen) {
 /* Progress bar fill */
 .progress-fill {
     height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, 
-        #00ff00 0%, 
-        #00ff00 45%, 
-        #7fff00 50%, 
-        #00ff00 55%, 
-        #00ff00 100%
-    );
+    width: 100%;
     display: flex;
-    transition: width 0.3s ease;
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
-    animation: progress-glow 1s infinite alternate;
-}
-
-@keyframes progress-glow {
-    from { box-shadow: 0 0 10px rgba(0, 255, 0, 0.6); }
-    to { box-shadow: 0 0 20px rgba(0, 255, 0, 1); }
 }
 
 /* Individual progress segments (pixelated blocks) */
@@ -133,11 +143,27 @@ body:has(#loading-screen) {
     flex: 1;
     height: 100%;
     border-right: 2px solid #000;
-    background: #00ff00;
+    background: linear-gradient(90deg, 
+        #00ff00 0%, 
+        #00ff00 45%, 
+        #7fff00 50%, 
+        #00ff00 55%, 
+        #00ff00 100%
+    );
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.6);
+    animation: segment-glow 1s infinite alternate;
 }
 
 .progress-segment:last-child {
     border-right: none;
+}
+
+@keyframes segment-glow {
+    from { box-shadow: 0 0 5px rgba(0, 255, 0, 0.6); }
+    to { box-shadow: 0 0 10px rgba(0, 255, 0, 1); }
 }
 
 /* Loading text */
